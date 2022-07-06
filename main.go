@@ -11,16 +11,24 @@ func main()  {
 	fmt.Printf("we have a total of %v tickets but %v left.\n",trainTickets, remainingTickets )
 	fmt.Println("Please book your tickets")
 
-	var userName string
+	var firstName string
+	var lastName string
+	var email string
 	var userTickets uint
 
-	fmt.Println("Please enter your name:")
-	fmt.Scan(&userName) 
+	fmt.Println("Please enter your first name:")
+	fmt.Scan(&firstName) 
+	fmt.Println("Please enter your last name:")
+	fmt.Scan(&lastName) 
+	fmt.Println("Please enter your email:")
+	fmt.Scan(&email) 
 	fmt.Println("how many tickets would you like to purchase?")
 	fmt.Scan(&userTickets)
+	 
+	remainingTickets = remainingTickets - int(userTickets)  
 
-	fmt.Printf("%v has booked %v tickets.\n",userName, userTickets )
-
+	fmt.Printf("Thank you %v %v for purchasing %v tickets, you will recieve a confirmation email at %v shortly \n",firstName,lastName, userTickets, email )
+	fmt.Printf("%v tickets are left\n",remainingTickets)
 	 
 
 
