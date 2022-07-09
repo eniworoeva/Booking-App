@@ -11,13 +11,13 @@ func main() {
 	var remainingTickets int = 50
 	var bookings []string
 
-	greetUser(stationName,trainTickets,remainingTickets)
- 	
+	greetUser(stationName, trainTickets, remainingTickets)
+
 	var firstName string
 	var lastName string
 	var email string
-	var userTickets uint 
-	
+	var userTickets uint
+
 	for {
 
 		fmt.Println("Please enter your first name:")
@@ -29,9 +29,7 @@ func main() {
 		fmt.Println("how many tickets would you like to purchase?")
 		fmt.Scan(&userTickets)
 
-		isValidNames := len(firstName) >= 2 && len(lastName) >= 2
-		isValidEmail := strings.Contains(email, "@")
-		isValidTickets := userTickets > 0 && userTickets <= uint(remainingTickets)
+		isValidEmail, isValidNames, isValidTickets := validateUserInput(firstName, lastName, email, userTickets, uint(remainingTickets))
 
 		//checks to make sure the user doesn't input a number > than tickets remaining
 		if isValidTickets && isValidEmail && isValidNames {
@@ -43,7 +41,8 @@ func main() {
 			fmt.Printf("%v tickets are left\n", remainingTickets)
 
 			//call first name function
-			userFirstName(bookings)
+			firstNames := userFirstName(bookings)
+			fmt.Printf("The first names of the bookings are:%v\n", firstNames)
 
 			//checks if tickects are still available
 			if remainingTickets == 0 {
@@ -67,20 +66,26 @@ func main() {
 
 }
 
-func greetUser(stationName string, trainTickets int, remainingTickets int)  {
+func greetUser(stationName string, trainTickets int, remainingTickets int) {
 	fmt.Printf("welcome to %v ", stationName)
 	fmt.Printf("we have a total of %v tickets but %v left.\n", trainTickets, remainingTickets)
 	fmt.Println("Please book your tickets")
 
 }
-func userFirstName(bookings []string)  {
+func userFirstName(bookings []string) []string {
 	firstNames := []string{}
-			//loop through the values and ignore the indices
-			for _, val := range bookings {
-				//seperate the strings using whitespaces
-				names := strings.Fields(val)
-				//place the first seperated string into the storage container
-				firstNames = append(firstNames, names[0])
-			}
-			fmt.Printf("The first names of the bookings are:%v\n", firstNames)
+	//loop through the values and ignore the indices
+	for _, val := range bookings {
+		//seperate the strings using whitespaces
+		names := strings.Fields(val)
+		//place the first seperated string into the storage container
+		firstNames = append(firstNames, names[0])
+	}
+	return firstNames
+}
+func validateUserInput(firstName string, lastName string, email string, userTickets uint, remainingTickets uint) (bool, bool, bool) {
+	isValidNames := len(firstName) >= 2 && len(lastName) >= 2
+	isValidEmail := strings.Contains(email, "@")
+	isValidTickets := userTickets > 0 && userTickets <= uint(remainingTickets)
+	return isValidEmail, isValidNames, isValidTickets
 }
