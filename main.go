@@ -11,13 +11,12 @@ func main() {
 	var remainingTickets int = 50
 	var bookings []string
 
-	greetUser()
- 	fmt.Printf("we have a total of %v tickets but %v left.\n", trainTickets, remainingTickets)
-	fmt.Println("Please book your tickets")
+	greetUser(stationName,trainTickets,remainingTickets)
+ 	
 	var firstName string
 	var lastName string
 	var email string
-	var userTickets uint
+	var userTickets uint 
 	
 	for {
 
@@ -43,16 +42,8 @@ func main() {
 			fmt.Printf("Thank you %v %v for purchasing %v tickets, you will recieve a confirmation email at %v shortly \n", firstName, lastName, userTickets, email)
 			fmt.Printf("%v tickets are left\n", remainingTickets)
 
-			//create a storage container
-			firstNames := []string{}
-			//loop through the values and ignore the indices
-			for _, val := range bookings {
-				//seperate the strings using whitespaces
-				names := strings.Fields(val)
-				//place the first seperated string into the storage container
-				firstNames = append(firstNames, names[0])
-			}
-			fmt.Printf("The first names of the bookings are:%v\n", firstNames)
+			//call first name function
+			userFirstName(bookings)
 
 			//checks if tickects are still available
 			if remainingTickets == 0 {
@@ -76,6 +67,20 @@ func main() {
 
 }
 
-func greetUser()  {
-	fmt.Println("welcome to Oreva's Metro station ")
+func greetUser(stationName string, trainTickets int, remainingTickets int)  {
+	fmt.Printf("welcome to %v ", stationName)
+	fmt.Printf("we have a total of %v tickets but %v left.\n", trainTickets, remainingTickets)
+	fmt.Println("Please book your tickets")
+
+}
+func userFirstName(bookings []string)  {
+	firstNames := []string{}
+			//loop through the values and ignore the indices
+			for _, val := range bookings {
+				//seperate the strings using whitespaces
+				names := strings.Fields(val)
+				//place the first seperated string into the storage container
+				firstNames = append(firstNames, names[0])
+			}
+			fmt.Printf("The first names of the bookings are:%v\n", firstNames)
 }
