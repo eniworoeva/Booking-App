@@ -11,13 +11,14 @@ func main() {
 	var remainingTickets int = 50
 	var bookings []string
 
-	fmt.Printf("Welcome to %v.\n", stationName)
-	fmt.Printf("we have a total of %v tickets but %v left.\n", trainTickets, remainingTickets)
+	greetUser()
+ 	fmt.Printf("we have a total of %v tickets but %v left.\n", trainTickets, remainingTickets)
 	fmt.Println("Please book your tickets")
 	var firstName string
 	var lastName string
 	var email string
 	var userTickets uint
+	
 	for {
 
 		fmt.Println("Please enter your first name:")
@@ -29,8 +30,12 @@ func main() {
 		fmt.Println("how many tickets would you like to purchase?")
 		fmt.Scan(&userTickets)
 
+		isValidNames := len(firstName) >= 2 && len(lastName) >= 2
+		isValidEmail := strings.Contains(email, "@")
+		isValidTickets := userTickets > 0 && userTickets <= uint(remainingTickets)
+
 		//checks to make sure the user doesn't input a number > than tickets remaining
-		if userTickets <= uint(remainingTickets) {
+		if isValidTickets && isValidEmail && isValidNames {
 
 			remainingTickets = remainingTickets - int(userTickets)
 			bookings = append(bookings, firstName+" "+lastName)
@@ -55,10 +60,22 @@ func main() {
 				break
 			}
 		} else {
-			fmt.Printf("we only have %v tickets left, you can not book %v tickets.\n", remainingTickets, userTickets)
-			
+			if !isValidEmail {
+				fmt.Println("enter a valid email address")
+			}
+			if !isValidNames {
+				fmt.Println("your name is to short")
+			}
+			if !isValidTickets {
+				fmt.Printf("your input data is invalid")
+			}
+
 		}
 
 	}
 
+}
+
+func greetUser()  {
+	fmt.Println("welcome to Oreva's Metro station ")
 }
