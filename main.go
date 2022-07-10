@@ -3,8 +3,9 @@ package main
 import (
 	"fmt"
 	"strings"
+	"booking-app/helper"
 )
-
+  
 var stationName string = "Oreva metro station"
 
 const trainTickets int = 50
@@ -16,12 +17,12 @@ func main() {
 
 	greetUser()
 
-	for {
+	for { 
 
 		//calls getUserInput function
 		firstName, lastName, email, userTickets := getUserInput()
 
-		isValidEmail, isValidNames, isValidTickets := validateUserInput(firstName, lastName, email, userTickets)
+		isValidEmail, isValidNames, isValidTickets := helper.ValidateUserInput(firstName, lastName, email, userTickets)
 
 		//checks to make sure the user doesn't input a number > than tickets remaining
 		if isValidTickets && isValidEmail && isValidNames {
@@ -72,12 +73,7 @@ func userFirstName() []string {
 	}
 	return firstNames
 }
-func validateUserInput(firstName string, lastName string, email string, userTickets uint) (bool, bool, bool) {
-	isValidNames := len(firstName) >= 2 && len(lastName) >= 2
-	isValidEmail := strings.Contains(email, "@")
-	isValidTickets := userTickets > 0 && userTickets <= uint(remainingTickets)
-	return isValidEmail, isValidNames, isValidTickets
-}
+
 func getUserInput() (string, string, string, uint) {
 
 	var firstName string
