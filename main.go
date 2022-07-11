@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
-	"booking-app/helper"
 )
   
 var stationName string = "Oreva metro station"
@@ -22,7 +22,7 @@ func main() {
 		//calls getUserInput function
 		firstName, lastName, email, userTickets := getUserInput()
 
-		isValidEmail, isValidNames, isValidTickets := helper.ValidateUserInput(firstName, lastName, email, userTickets)
+		isValidEmail, isValidNames, isValidTickets := validateUserInput(firstName, lastName, email, userTickets, uint(remainingTickets))
 
 		//checks to make sure the user doesn't input a number > than tickets remaining
 		if isValidTickets && isValidEmail && isValidNames {
@@ -94,6 +94,15 @@ func getUserInput() (string, string, string, uint) {
 }
 func bookingLogic(userTickets uint, firstName string, lastName string, email string) {
 	remainingTickets = remainingTickets - int(userTickets)
+
+	//create a map a user map
+	 var userData =  make(map[string]string)
+	 userData["firstName"] = firstName
+	 userData["lastName"] = lastName
+	 userData["email"] = email
+	 userData["numberOfTickets"] = strconv.Itoa(int(userTickets))
+	
+
 	bookings = append(bookings, firstName+" "+lastName)
 
 	fmt.Printf("Thank you %v %v for purchasing %v tickets, you will recieve a confirmation email at %v shortly \n", firstName, lastName, userTickets, email)
