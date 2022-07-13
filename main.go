@@ -2,13 +2,12 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 )
   
 var stationName string = "Oreva metro station"
 const trainTickets int = 50
 var remainingTickets int = 50
-var bookings = make([]map[string]string, 0)
+var bookings = make([]userData, 0)
 
 type userData struct {
 	firstName string
@@ -70,7 +69,7 @@ func userFirstName() []string {
 	firstNames := []string{}
 	//loops through the slice of map and extract the first names
 	for _, val := range bookings {
-		firstNames = append(firstNames, val["firstName"])
+		firstNames = append(firstNames, val.firstName)
 	}
 	return firstNames
 }
@@ -97,12 +96,14 @@ func bookingLogic(userTickets uint, firstName string, lastName string, email str
 	remainingTickets = remainingTickets - int(userTickets)
 
 	//create a map a user map 
-	 var userData =  make(map[string]string)
-	 userData["firstName"] = firstName
-	 userData["lastName"] = lastName
-	 userData["email"] = email
-	 userData["numberOfTickets"] = strconv.Itoa(int(userTickets))
-	
+	 var userData =  userData {
+		firstName: firstName,
+		lastName: lastName,
+		email: email,
+		numberOfTickets: userTickets,
+	 }
+
+	 
 
 	bookings = append(bookings, userData)
 
