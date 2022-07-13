@@ -3,15 +3,19 @@ package main
 import (
 	"fmt"
 	"strconv"
-	"strings"
 )
   
 var stationName string = "Oreva metro station"
-
 const trainTickets int = 50
-
 var remainingTickets int = 50
-var bookings []string
+var bookings = make([]map[string]string, 0)
+
+type userData struct {
+	firstName string
+	lastName string
+	email string
+	numberOfTickets uint
+}
 
 func main() {
 
@@ -36,7 +40,7 @@ func main() {
 			//checks if tickects are still available
 			if remainingTickets == 0 {
 				//end program
-				fmt.Println("Train tickets are booked out.  ")
+				fmt.Println("Train tickets are booked out.")
 				break
 			}
 		} else {
@@ -64,12 +68,9 @@ func greetUser() {
 }
 func userFirstName() []string {
 	firstNames := []string{}
-	//loop through the values and ignore the indices
+	//loops through the slice of map and extract the first names
 	for _, val := range bookings {
-		//seperate the strings using whitespaces
-		names := strings.Fields(val)
-		//place the first seperated string into the storage container
-		firstNames = append(firstNames, names[0])
+		firstNames = append(firstNames, val["firstName"])
 	}
 	return firstNames
 }
@@ -95,7 +96,7 @@ func getUserInput() (string, string, string, uint) {
 func bookingLogic(userTickets uint, firstName string, lastName string, email string) {
 	remainingTickets = remainingTickets - int(userTickets)
 
-	//create a map a user map
+	//create a map a user map 
 	 var userData =  make(map[string]string)
 	 userData["firstName"] = firstName
 	 userData["lastName"] = lastName
@@ -103,8 +104,9 @@ func bookingLogic(userTickets uint, firstName string, lastName string, email str
 	 userData["numberOfTickets"] = strconv.Itoa(int(userTickets))
 	
 
-	bookings = append(bookings, firstName+" "+lastName)
+	bookings = append(bookings, userData)
 
+	fmt.Printf("list of bookings is %v:\n", bookings)
 	fmt.Printf("Thank you %v %v for purchasing %v tickets, you will recieve a confirmation email at %v shortly \n", firstName, lastName, userTickets, email)
 	fmt.Printf("%v tickets are left\n", remainingTickets)
 
