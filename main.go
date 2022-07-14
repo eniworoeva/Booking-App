@@ -31,6 +31,7 @@ func main() {
 		if isValidTickets && isValidEmail && isValidNames {
 
 			bookingLogic(userTickets, firstName, lastName, email)
+			sendTickets(userTickets, firstName, lastName, email)
 
 			//call first name function
 			firstNames := userFirstName()
@@ -111,4 +112,10 @@ func bookingLogic(userTickets uint, firstName string, lastName string, email str
 	fmt.Printf("Thank you %v %v for purchasing %v tickets, you will recieve a confirmation email at %v shortly \n", firstName, lastName, userTickets, email)
 	fmt.Printf("%v tickets are left\n", remainingTickets)
 
+}
+func sendTickets(userTickets uint, firstName string, lastName string, email string)  {
+	var ticket = fmt.Sprintf("%v tickets for %v %v",userTickets, firstName, lastName)
+	fmt.Println("############")
+	fmt.Printf("Sending ticket:\n %v \nto email address %v\n", ticket, email)
+	fmt.Println("############")
 }
