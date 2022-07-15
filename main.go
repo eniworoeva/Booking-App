@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
   
 var stationName string = "Oreva metro station"
@@ -31,7 +32,7 @@ func main() {
 		if isValidTickets && isValidEmail && isValidNames {
 
 			bookingLogic(userTickets, firstName, lastName, email)
-			sendTickets(userTickets, firstName, lastName, email)
+			go sendTickets(userTickets, firstName, lastName, email)
 
 			//call first name function
 			firstNames := userFirstName()
@@ -114,6 +115,7 @@ func bookingLogic(userTickets uint, firstName string, lastName string, email str
 
 }
 func sendTickets(userTickets uint, firstName string, lastName string, email string)  {
+	time.Sleep(10 * time.Second)
 	var ticket = fmt.Sprintf("%v tickets for %v %v",userTickets, firstName, lastName)
 	fmt.Println("############")
 	fmt.Printf("Sending ticket:\n %v \nto email address %v\n", ticket, email)
